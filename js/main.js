@@ -2,31 +2,48 @@ const input = document.querySelector("input"); //Entrada formulario
 const addBtn = document.querySelector("#add-button"); //Botón agregar tarea
 const list = document.querySelector("#todo-list");  //Lista de tareas
 const empty = document.querySelector(".empty");  //Mensaje de lista vacía
-const full = document.querySelector(".full");
+const full = document.querySelector(".delete-all"); //Botón eliminar todas las tareas
+
 
 full.style.display = "none";
 
 addBtn.addEventListener('click', (e) => {
     e.preventDefault(); //No recarga la página al hacer click en botón
     const text = input.value;
-
+    let completed = false;
     if (text !== "") {
         const li = document.createElement("li");
-    const p = document.createElement("p");
-    p.textContent = text;
+        const p = document.createElement("p");
+        p.textContent = text;
 
-    li.appendChild(p);
-    li.appendChild(addDeleteBtn());
-    li.appendChild(addUpBtn());
-    li.appendChild(addDownBtn());
-    list.appendChild(li);
+        li.appendChild(p);
+        li.appendChild(addDeleteBtn());
+        li.appendChild(addUpBtn());
+        li.appendChild(addDownBtn());
+        list.appendChild(li);
+        input.value = "";
+        empty.style.display = "none";
+        full.style.display = "block";
 
-    input.value = "";
-    empty.style.display = "none";
-    full.style.display = "block";
+        if (completed) {
+            p.classList.add("completed");
+        }
+
+        p.addEventListener("dblclick", toggleToDoItemState);
     }
     
 });
+
+function toggleToDoItemState() {
+    if (this.classList.contains("completed")) {
+        this.classList.remove("completed");
+    } else {
+        this.classList.add("completed");
+    }
+}
+
+
+
 
 function addDeleteBtn() {
     const deleteBtn = document.createElement('button');
