@@ -25,9 +25,6 @@ addBtn.addEventListener('click', (e) => {
         empty.style.display = "none";
         full.style.display = "block";
 
-        if (completed) {
-            p.classList.add("completed");
-        }
 
         p.addEventListener("dblclick", toggleToDoItemState);
     }
